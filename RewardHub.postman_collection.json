@@ -1,0 +1,105 @@
+{
+  "info": {
+    "name": "RewardHub API",
+    "description": "API collection for RewardHub cashback platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/health",
+        "header": []
+      }
+    },
+    {
+      "name": "Stats",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/stats",
+        "header": []
+      }
+    },
+    {
+      "name": "Create User",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/users",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"John Doe\",\"email\":\"john@example.com\"}"
+        }
+      }
+    },
+    {
+      "name": "Get All Users",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/users",
+        "header": []
+      }
+    },
+    {
+      "name": "Get User by ID",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/users/USER1",
+        "header": []
+      }
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PUT",
+        "url": "{{base_url}}/api/users/USER1",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"John Updated\",\"email\":\"john.updated@example.com\"}"
+        }
+      }
+    },
+    {
+      "name": "Create Transaction",
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/transactions",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"userId\":\"USER1\",\"merchant\":\"Amazon\",\"amount\":100.00,\"cashbackPercent\":5}"
+        }
+      }
+    },
+    {
+      "name": "Get All Transactions",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/transactions",
+        "header": []
+      }
+    },
+    {
+      "name": "Get User Transactions",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/transactions/USER1",
+        "header": []
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
