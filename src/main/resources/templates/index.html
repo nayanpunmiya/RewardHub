@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RewardHub - Earn Cashback on Every Purchase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; min-height: 100vh; }
+        header { background: rgba(0,0,0,0.1); padding: 20px 0; color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        nav h1 { font-size: 28px; font-weight: bold; }
+        nav button { background: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; color: #667eea; }
+        nav button:hover { background: #f0f0f0; }
+        .hero { text-align: center; color: white; padding: 80px 20px; }
+        .hero h2 { font-size: 48px; margin-bottom: 20px; }
+        .hero p { font-size: 20px; margin-bottom: 30px; opacity: 0.9; }
+        .btn { display: inline-block; background: #ff6b6b; color: white; padding: 15px 40px; border-radius: 5px; text-decoration: none; font-weight: bold; cursor: pointer; border: none; font-size: 16px; }
+        .btn:hover { background: #ff5252; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 80px 20px; background: white; margin-top: 40px; }
+        .feature { text-align: center; padding: 30px; background: #f8f9fa; border-radius: 10px; }
+        .feature h3 { margin: 20px 0 10px 0; font-size: 22px; }
+        .feature p { color: #666; line-height: 1.6; }
+        .icon { font-size: 48px; }
+        .dashboard-btn { margin-top: 30px; }
+        form { display: flex; flex-direction: column; gap: 15px; background: white; padding: 30px; border-radius: 10px; max-width: 500px; margin: 40px auto; }
+        input, select { padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; }
+        input:focus { outline: none; border-color: #667eea; }
+        .hidden { display: none; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0; }
+        .stat-box { background: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-box h4 { color: #667eea; font-size: 24px; }
+        .stat-box p { color: #666; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 10px; overflow: hidden; }
+        th { background: #667eea; color: white; padding: 15px; text-align: left; }
+        td { padding: 12px 15px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f5f5f5; }
+        footer { text-align: center; padding: 30px; background: rgba(0,0,0,0.2); color: white; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <h1>💰 RewardHub</h1>
+                <div>
+                    <button onclick="toggleSection('home')">Home</button>
+                    <button onclick="toggleSection('dashboard')">Dashboard</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="home" class="section">
+        <div class="hero">
+            <h2>Earn Cashback on Every Purchase</h2>
+            <p>Join thousands of users and start earning rewards today</p>
+            <button class="btn" onclick="toggleSection('signup')">Get Started Free</button>
+        </div>
+
+        <div class="container features">
+            <div class="feature">
+                <div class="icon">🎯</div>
+                <h3>Easy Signup</h3>
+                <p>Register in seconds and start earning cashback immediately</p>
+            </div>
+            <div class="feature">
+                <div class="icon">💳</div>
+                <h3>Multiple Merchants</h3>
+                <p>Earn rewards on purchases from thousands of partner merchants</p>
+            </div>
+            <div class="feature">
+                <div class="icon">📊</div>
+                <h3>Track Rewards</h3>
+                <p>Monitor your earnings and view detailed transaction history</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup" class="section hidden">
+        <div class="container">
+            <form onsubmit="signupUser(event)">
+                <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">Create Your Account</h2>
+                <input type="text" id="signupName" placeholder="Full Name" required>
+                <input type="email" id="signupEmail" placeholder="Email Address" required>
+                <button class="btn" type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard" class="section hidden">
+        <div class="container">
+            <h2 style="color: white; margin: 30px 0;">Welcome to Your Dashboard</h2>
+            
+            <div class="stats" id="stats">
+                <div class="stat-box">
+                    <h4 id="userCount">0</h4>
+                    <p>Total Users</p>
+                </div>
+                <div class="stat-box">
+                    <h4 id="transCount">0</h4>
+                    <p>Transactions</p>
+                </div>
+                <div class="stat-box">
+                    <h4 id="cashbackTotal">$0.00</h4>
+                    <p>Cashback Given</p>
+                </div>
+            </div>
+
+            <div style="background: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="margin-bottom: 20px; color: #667eea;">Add Transaction</h3>
+                <form onsubmit="addTransaction(event)" style="max-width: 600px;">
+                    <select id="txnUser" required>
+                        <option value="">Select User</option>
+                    </select>
+                    <input type="text" id="txnMerchant" placeholder="Merchant Name" required>
+                    <input type="number" id="txnAmount" placeholder="Amount" step="0.01" required>
+                    <input type="number" id="txnCashback" placeholder="Cashback %" min="0" max="100" value="5" required>
+                    <button class="btn" type="submit">Add Transaction</button>
+                </form>
+            </div>
+
+            <div style="background: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="margin-bottom: 20px; color: #667eea;">Recent Transactions</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Merchant</th>
+                            <th>Amount</th>
+                            <th>Cashback %</th>
+                            <th>Cashback Earned</th>
+                        </tr>
+                    </thead>
+                    <tbody id="txnTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 RewardHub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const API = '/api';
+        let currentUserId = null;
+
+        function toggleSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(section).classList.remove('hidden');
+            if (section === 'dashboard') loadDashboard();
+        }
+
+        async function signupUser(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            
+            try {
+                const res = await fetch(`${API}/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email })
+                });
+                const user = await res.json();
+                currentUserId = user.id;
+                alert(`✅ Signup successful! Your User ID: ${user.id}`);
+                document.getElementById('signupName').value = '';
+                document.getElementById('signupEmail').value = '';
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        async function loadDashboard() {
+            try {
+                const statsRes = await fetch(`${API}/stats`);
+                const stats = await statsRes.json();
+                document.getElementById('userCount').textContent = stats.totalUsers;
+                document.getElementById('transCount').textContent = stats.totalTransactions;
+                document.getElementById('cashbackTotal').textContent = '$' + stats.totalCashbackDistributed.toFixed(2);
+
+                const usersRes = await fetch(`${API}/users`);
+                const users = await usersRes.json();
+                const select = document.getElementById('txnUser');
+                select.innerHTML = '<option value="">Select User</option>';
+                users.forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.id;
+                    option.textContent = `${u.name} (${u.id})`;
+                    select.appendChild(option);
+                });
+
+                const txnRes = await fetch(`${API}/transactions`);
+                const transactions = await txnRes.json();
+                const tbody = document.getElementById('txnTable');
+                tbody.innerHTML = '';
+                transactions.forEach(t => {
+                    const user = users.find(u => u.id === t.userId);
+                    const row = tbody.insertRow();
+                    row.innerHTML = `
+                        <td>${user ? user.name : t.userId}</td>
+                        <td>${t.merchant}</td>
+                        <td>$${t.amount.toFixed(2)}</td>
+                        <td>${t.cashbackPercent}%</td>
+                        <td>$${t.cashbackAmount.toFixed(2)}</td>
+                    `;
+                });
+            } catch (e) {
+                console.error('Error loading dashboard:', e);
+            }
+        }
+
+        async function addTransaction(e) {
+            e.preventDefault();
+            const userId = document.getElementById('txnUser').value;
+            const merchant = document.getElementById('txnMerchant').value;
+            const amount = parseFloat(document.getElementById('txnAmount').value);
+            const cashbackPercent = parseFloat(document.getElementById('txnCashback').value);
+
+            try {
+                const res = await fetch(`${API}/transactions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, merchant, amount, cashbackPercent })
+                });
+                const txn = await res.json();
+                alert(`✅ Transaction added! Cashback: $${txn.cashbackAmount.toFixed(2)}`);
+                document.getElementById('txnMerchant').value = '';
+                document.getElementById('txnAmount').value = '';
+                document.getElementById('txnCashback').value = '5';
+                loadDashboard();
+            } catch (e) {
+                alert('Error: ' + e.message);
+            }
+        }
+
+        window.onload = () => loadDashboard();
+    </script>
+</body>
+</html>
