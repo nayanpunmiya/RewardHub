@@ -13,6 +13,9 @@ COPY --from=builder /app/target/reward-hub-1.0.0.jar .
 # Explicitly set JAVA_OPTS to empty to prevent it from being used
 ENV JAVA_OPTS=""
 
+# Set PATH to include Java bin directory for entrypoint scripts
+ENV PATH="/opt/java/openjdk/bin:$PATH"
+
 EXPOSE 8080
 
 # Use full path to java executable to avoid PATH issues
