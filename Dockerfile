@@ -11,21 +11,12 @@ LABEL build_date="2026-06-02"
 WORKDIR /app
 COPY --from=builder /app/target/reward-hub-1.0.0.jar .
 
-# Copy and make executable
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
-# Make ABSOLUTELY sure java is in PATH by copying it to standard location
-RUN cp /opt/java/openjdk/bin/java /usr/bin/java && \
-    chmod +x /usr/bin/java && \
-    /usr/bin/java -version
-
-# Set up environment
+# Set up environment for Java
 ENV JAVA_HOME=/opt/java/openjdk
-ENV PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=/opt/java/openjdk/bin:$PATH
 ENV JAVA_OPTS=""
 
 EXPOSE 8080
 
-# Use CMD with full path - Railway wrapper will execute this
+# Run using absolute path - avoids PATH lookup issues
 CMD ["/opt/java/openjdk/bin/java", "-jar", "reward-hub-1.0.0.jar"]
