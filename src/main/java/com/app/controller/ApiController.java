@@ -4,7 +4,6 @@ import com.app.model.User;
 import com.app.model.Transaction;
 import com.app.service.Database;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
