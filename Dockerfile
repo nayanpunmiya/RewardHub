@@ -7,13 +7,14 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/target/reward-hub-1.0.0.jar .
-COPY entrypoint.sh /app/
-RUN chmod +x /app/entrypoint.sh
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
 EXPOSE 8080
 
 # Set JAVA_TOOL_OPTIONS for container optimization
+# This is picked up automatically by the JVM, no need to pass it as CLI arg
 ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 
-# Use the entrypoint script to properly handle environment variables
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Use entrypoint script to handle environment variable expansion
+ENTRYPOINT ["./entrypoint.sh"]
