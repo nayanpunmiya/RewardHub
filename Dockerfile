@@ -8,4 +8,4 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/target/reward-hub-1.0.0.jar .
 EXPOSE 8080
-CMD ["java", "-jar", "reward-hub-1.0.0.jar"]
+CMD ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar reward-hub-1.0.0.jar"]
