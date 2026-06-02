@@ -9,14 +9,15 @@ FROM eclipse-temurin:17-jre-alpine
 LABEL build_date="2026-06-02"
 WORKDIR /app
 COPY --from=builder /app/target/reward-hub-1.0.0.jar .
+COPY entrypoint.sh /app/entrypoint.sh
 
-# Explicitly set JAVA_OPTS to empty to prevent it from being used
+# Set executable permissions on entrypoint script
+RUN chmod +x /app/entrypoint.sh
+
+# Explicitly set JAVA_OPTS to empty
 ENV JAVA_OPTS=""
-
-# Set PATH to include Java bin directory for entrypoint scripts
-ENV PATH="/opt/java/openjdk/bin:$PATH"
 
 EXPOSE 8080
 
-# Use full path to java executable to avoid PATH issues
-CMD ["/opt/java/openjdk/bin/java", "-jar", "reward-hub-1.0.0.jar"]
+# Use explicit entrypoint script to bypass Railway's wrapper
+ENTRYPOINT ["/app/entrypoint.sh"]
