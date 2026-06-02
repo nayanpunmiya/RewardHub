@@ -11,10 +11,11 @@ WORKDIR /app
 COPY --from=builder /app/target/reward-hub-1.0.0.jar .
 COPY entrypoint.sh /app/entrypoint.sh
 
-# Set executable permissions on entrypoint script
-RUN chmod +x /app/entrypoint.sh
+# Create symlink to make java globally available in PATH
+RUN ln -s /opt/java/openjdk/bin/java /usr/bin/java && \
+    chmod +x /app/entrypoint.sh
 
-# Explicitly set JAVA_OPTS to empty
+# Set executable permissions on entrypoint script
 ENV JAVA_OPTS=""
 
 EXPOSE 8080
