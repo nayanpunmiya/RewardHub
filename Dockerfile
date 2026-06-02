@@ -1,8 +1,8 @@
 FROM maven:3.9-eclipse-temurin-17 AS builder
+ARG BUILD_DATE
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-# Force rebuild - busting Docker cache to ensure fresh build
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
@@ -11,11 +11,6 @@ COPY --from=builder /app/target/reward-hub-1.0.0.jar .
 
 EXPOSE 8080
 
-# Set JAVA_TOOL_OPTIONS for container optimization
-# This is automatically picked up by the JVM
-ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
-ENV SERVER_PORT=8080
-
-# Use CMD with sh -c to ensure proper variable expansion
-# This will use SERVER_PORT environment variable (or PORT if Railway sets it)
-CMD ["sh", "-c", "java -jar reward-hub-1.0.0.jar"]
+# Minimal setup - exec form ENTRYPOINT bypasses shell interpretation issues
+# Spring Boot will read environment variables (PORT, etc.) directly
+ENTRYPOINT ["java", "-jar", "reward-hub-1.0.0.jar"]

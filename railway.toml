@@ -1,13 +1,10 @@
 # Railway Configuration for RewardHub
 
 [build]
-# Use the Dockerfile for building the image
 dockerfile = "Dockerfile"
-# Disable Docker layer caching to force fresh build
-buildArgs = []
 
 [deploy]
-# Set environment variables
+# Environment variables for Spring Boot
 [env]
-JAVA_TOOL_OPTIONS = "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
-SERVER_PORT = "8080"
+# Railway will automatically set PORT - Spring Boot reads it as server.port
+SPRING_PROFILES_ACTIVE = "production"
