@@ -3,6 +3,7 @@
 
 [build]
 dockerfile = "Dockerfile"
+args = ["CACHE_BUST=26b931a"]
 
 [deploy]
 # Environment variables for Spring Boot
