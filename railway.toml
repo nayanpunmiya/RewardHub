@@ -3,11 +3,11 @@
 [build]
 # Use the Dockerfile for building the image
 dockerfile = "Dockerfile"
+# Disable Docker layer caching to force fresh build
+buildArgs = []
 
 [deploy]
-# Don't override startCommand - let Docker ENTRYPOINT handle it
-# The entrypoint.sh script will properly expand environment variables
-
 # Set environment variables
 [env]
 JAVA_TOOL_OPTIONS = "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+SERVER_PORT = "8080"
