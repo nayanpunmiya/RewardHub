@@ -5,11 +5,9 @@
 dockerfile = "Dockerfile"
 
 [deploy]
-# Explicitly define the startup command
-# This prevents Railway from using default Java startup with $JAVA_OPTS
-startCommand = "java -Dserver.port=$PORT -jar /app/reward-hub-1.0.0.jar"
+# Don't override startCommand - let Docker ENTRYPOINT handle it
+# The entrypoint.sh script will properly expand environment variables
 
 # Set environment variables
 [env]
-PORT = "8080"
 JAVA_TOOL_OPTIONS = "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
