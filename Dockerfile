@@ -10,8 +10,12 @@ LABEL build_date="2026-06-02"
 WORKDIR /app
 COPY --from=builder /app/target/reward-hub-1.0.0.jar .
 
+# CRITICAL: Unset JAVA_OPTS completely to prevent it from being passed as class name
+ENV JAVA_OPTS=""
+# Disable Buildkit/legacy startup behavior
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 EXPOSE 8080
 
-# Minimal setup - exec form ENTRYPOINT bypasses shell interpretation issues
-# Spring Boot will read environment variables (PORT, etc.) directly
-ENTRYPOINT ["java", "-jar", "reward-hub-1.0.0.jar"]
+# Direct command - no shell interpretation
+CMD ["java", "-jar", "reward-hub-1.0.0.jar"]
