@@ -43,7 +43,7 @@ mvn spring-boot:run
 
 ## Live Demo
 
-🚀 **Deployed on Railway**: [View Live App](https://rewarded-production.up.railway.app) _(Update with your actual Railway URL)_
+🚀 **Deployed on Railway**: [View Live App](https://web-production-69fa7.up.railway.app/)
 
 ## API Endpoints
 
