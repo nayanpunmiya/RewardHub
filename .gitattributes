@@ -10,6 +10,11 @@ pom.xml linguist-language=XML
 # Resources
 src/main/resources/** linguist-documentation
 
+# Shell and batch scripts - excluded from language detection
+*.sh linguist-documentation
+*.bat linguist-documentation
+*.cmd linguist-documentation
+
 # HTML/CSS/JavaScript are excluded from primary language calculation
 *.html linguist-documentation
 *.css linguist-documentation
