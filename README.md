@@ -29,7 +29,7 @@ A modern, full-stack cashback rewards platform built with Java Spring Boot. Trac
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/RewardHub.git
+git clone https://github.com/nayanpunmiya/RewardHub.git
 cd RewardHub
 
 # Build the project
@@ -40,6 +40,10 @@ mvn spring-boot:run
 ```
 
 **Access**: http://localhost:8080
+
+## Live Demo
+
+🚀 **Deployed on Railway**: [View Live App](https://rewarded-production.up.railway.app) _(Update with your actual Railway URL)_
 
 ## API Endpoints
 
