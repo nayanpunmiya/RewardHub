@@ -1,0 +1,24 @@
+* text=auto
+
+# Java source code
+*.java linguist-language=Java
+*.class binary
+
+# Maven
+pom.xml linguist-language=XML
+
+# Resources
+src/main/resources/** linguist-documentation
+
+# HTML/CSS/JavaScript are excluded from primary language calculation
+*.html linguist-documentation
+*.css linguist-documentation
+*.js linguist-language=JavaScript
+
+# Build files
+target/** linguist-generated
+*.jar binary
+
+# Docker files
+Dockerfile linguist-language=Dockerfile
+docker-compose.yml linguist-language=YAML
